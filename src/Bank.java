@@ -5,7 +5,6 @@ public class Bank {
     private ArrayList<BankAccount> accounts;
 
     public Bank() {
-        this.ban = false; // Початково банк не заблокований
         this.accounts = new ArrayList<>();
     }
 
