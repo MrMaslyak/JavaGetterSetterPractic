@@ -23,9 +23,9 @@ public class Main {
         System.out.println("**********************************************");
         System.out.println();
         Bank bank = new Bank();
-        BankAccount bankAccountAlex = new BankAccount("Alex", 1, 100);
-        BankAccount bankAccountDron = new BankAccount("Dron", 2, 200);
-        BankAccount bankAccountIlya = new BankAccount("Ilya", 3, 300);
+        BankAccount bankAccountAlex = new BankAccount("Alex", 1, 100, 1);
+        BankAccount bankAccountDron = new BankAccount("Dron", 2, 200, 1);
+        BankAccount bankAccountIlya = new BankAccount("Ilya", 3, 300, 1);
         bankAccountAlex.remainderMoney();
         bankAccountAlex.addMoney(-100);
         bankAccountAlex.addMoney(200);
@@ -36,8 +36,8 @@ public class Main {
         bankAccountDron.transferMoney(bankAccountIlya, 250);
         bankAccountIlya.remainderMoney();
         System.out.println("-----------------------------------");
-        bank.createAccount("Igor", 7, 1000);
-        bank.createAccount("Ivan", 8, 2000);
+        bank.createAccount("Igor", 7, 1000, 1);
+        bank.createAccount("Ivan", 8, 2000, 1);
         bank.addAccount(bankAccountAlex);
         bank.addAccount(bankAccountDron);
         bank.addAccount(bankAccountIlya);
@@ -48,6 +48,11 @@ public class Main {
         bank.printAllAccounts();
         bank.unbanAccount(bankAccountAlex);
         bank.printAllAccounts();
+        bankAccountDron.addMoney(1000);
+bank.changeCredit(bankAccountDron, 500);
+bankAccountDron.closeCredit(250);
+        System.out.println("Later Time");
+        bankAccountDron.closeCredit(400);
         System.out.println();
         System.out.println("**********************************************");
         System.out.println();

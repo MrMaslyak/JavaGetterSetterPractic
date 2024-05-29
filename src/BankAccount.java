@@ -2,11 +2,22 @@ public class BankAccount {
     private String user;
     private int money;
     private int indexUser;
+     private double credit;
+    private static final double DEFAULT_CREDIT_LIMIT = 0;
 
-    public BankAccount(String user, int indexUser, int money) {
+    public BankAccount(String user, int indexUser, int money , double  credit) {
         this.user = user;
         this.indexUser = indexUser;
         this.money = money;
+        this.credit = DEFAULT_CREDIT_LIMIT;
+    }
+
+    public void setCredit(double credit) {
+        this.credit = credit;
+    }
+
+    public double getCredit() {
+        return credit;
     }
 
 
@@ -69,4 +80,29 @@ public class BankAccount {
             System.out.println(this.getUser() + " you don't have enough money");
         }
     }
+    public void closeCredit(int moneyClose) {
+        double remainder = 0;
+
+        if (getCredit() == 0) {
+            System.out.println(this.getUser() + " your credit is already closed");
+            return;
+        }
+
+        if (moneyClose > getMoney()) {
+            System.out.println(this.getUser() + " You don't have enough money");
+        } else {
+            setMoney(getMoney() - moneyClose);
+            if (moneyClose >= getCredit()) {
+                remainder = moneyClose - getCredit();
+                setCredit(0);
+                setMoney((int) (getMoney() + remainder));
+                System.out.println("You paid off your credit and the remainder has been added to your account");
+            } else {
+                setCredit(getCredit() - moneyClose);
+            }
+            System.out.println(this.getUser() + " your new balance is " + getMoney() + "$ and your remaining credit is " + getCredit() + "$");
+        }
+    }
+
+
 }
