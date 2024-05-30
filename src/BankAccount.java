@@ -1,15 +1,27 @@
+import java.util.ArrayList;
+
 public class BankAccount {
     private String user;
     private int money;
     private int indexUser;
      private double credit;
     private static final double DEFAULT_CREDIT_LIMIT = 0;
+    ArrayList <TransactionBankPerson> transactionBankPerson = new ArrayList<>();
 
     public BankAccount(String user, int indexUser, int money , double  credit) {
         this.user = user;
         this.indexUser = indexUser;
         this.money = money;
         this.credit = DEFAULT_CREDIT_LIMIT;
+        this.transactionBankPerson = new ArrayList<>();
+    }
+
+    public ArrayList<TransactionBankPerson> getTransactionBank() {
+        return transactionBankPerson;
+    }
+
+    public void setTransactionBank(ArrayList<TransactionBankPerson> transactionBankPerson) {
+        this.transactionBankPerson = transactionBankPerson;
     }
 
     public void setCredit(double credit) {
@@ -44,7 +56,18 @@ public class BankAccount {
     public void setIndexUser(int indexUser) {
         this.indexUser = indexUser;
     }
-
+public void  addTransaction(String type, int amount){
+      String date = java.time.LocalDate.now().toString();
+      TransactionBankPerson transactionBankPerson = new TransactionBankPerson(type, amount, date);
+      this.transactionBankPerson.add(transactionBankPerson);
+}
+public void printTransaction(){
+    System.out.println("------------------------------------");
+    System.out.println("Transaction history for " + user + ":");
+        for (TransactionBankPerson transactionBankPerson : this.transactionBankPerson) {
+            System.out.println(transactionBankPerson);
+        }
+}
     public void addMoney(int money){
         if (money < 0) {
             System.out.println("You can't add a negative number");
@@ -53,6 +76,7 @@ public class BankAccount {
         this.setMoney(this.getMoney() + money);
         System.out.println(this.getUser() + " you added " + money + "$ to your account");
         System.out.println(this.getUser() + " your balance is " + this.getMoney() + "$");
+        this.addTransaction("add", money);
     }
 
     public void withdrawMoney(int money){
@@ -63,6 +87,7 @@ public class BankAccount {
         } else {
             System.out.println(this.getUser() + " you don't have enough money");
         }
+        this.addTransaction("withdraw", money);
     }
 
     public void remainderMoney(){
@@ -78,7 +103,9 @@ public class BankAccount {
             System.out.println(this.getUser() + " your balance is " + this.getMoney() + "$");
         } else {
             System.out.println(this.getUser() + " you don't have enough money");
+            return;
         }
+        this.addTransaction("transfer", money);
     }
     public void closeCredit(int moneyClose) {
         double remainder = 0;
@@ -102,6 +129,19 @@ public class BankAccount {
             }
             System.out.println(this.getUser() + " your new balance is " + getMoney() + "$ and your remaining credit is " + getCredit() + "$");
         }
+        this.addTransaction("closeCredit", moneyClose);
+    }
+    public void printCredit(){
+        System.out.println(this.getUser() + " your credit is " + this.getCredit() + "$");
+    }
+    public void getCredit(int valumeCredit) {
+        double addProcent = 0.05;
+        double amountCredited = valumeCredit * (1 - addProcent); // Удержание 5% от суммы кредита
+        setCredit(getCredit() + valumeCredit); // Добавляем всю сумму кредита к текущему кредитному балансу
+        setMoney((int) (getMoney() + amountCredited)); // Добавляем сумму с учетом удержания на баланс пользователя
+        System.out.println(getUser() + " You added a credit of " + valumeCredit + "$ to your account");
+        System.out.println(getUser() + " Your new balance is " + getMoney() + "$ and your credit is " + getCredit() + "$");
+        this.addTransaction("getCredit", valumeCredit);
     }
 
 

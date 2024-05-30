@@ -67,4 +67,21 @@ public class Bank {
     public void printCredit(BankAccount account) {
         System.out.println("User: " + account.getUser() + " has credit: " + account.getCredit() + "$");
     }
+    public void printAllCredits() {
+        for (BankAccount account : accounts) {
+            System.out.println("User: " + account.getUser() + " has credit: " + account.getCredit() + "$");
+        }
+    }
+    public void addProcentCredit (BankAccount account){
+        double procent = 0.05;
+        double setProcent = 0;
+        setProcent = account.getCredit() * procent;
+        account.setCredit(account.getCredit() + setProcent);
+        System.out.println("Bank added 5% to user: " + account.getUser());
+    }
+    public void addBonus (BankAccount account , int bonus){
+        account.setMoney(account.getMoney() + bonus);
+        System.out.println("Bank added " + bonus + "$ to user: " + account.getUser());
+    }
+
 }
